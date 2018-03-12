@@ -26,12 +26,11 @@ class PhotoVote extends DsFieldBase implements ContainerFactoryPluginInterface {
   protected $entityQuery;
 
   /**
-   * CompanyReviews constructor.
+   * PhotoVote constructor.
    *
    * @param array $configuration
    * @param $plugin_id
    * @param $plugin_definition
-   * @param \Drupal\Core\Session\AccountInterface $account
    * @param \Drupal\Core\Entity\Query\QueryFactory $queryFactory
    */
   public function __construct(array $configuration, $plugin_id, $plugin_definition, QueryFactory $queryFactory) {
@@ -57,17 +56,15 @@ class PhotoVote extends DsFieldBase implements ContainerFactoryPluginInterface {
   }
 
   /**
-   * {@inheritdoc}
+   * Function builds render array to display average vote for photo and vote count.
    *
-   * The method which return render array for add recommentaion link.
-   * If logged in user already gave review function build markup that user
-   * already gave a review.
-   *
+   * @return array|mixed
    */
   public function build() {
     $entity = $this->entity();
     $results = \Drupal::service('plugin.manager.votingapi.resultfunction')
       ->getResults($entity->getEntityTypeId(), $entity->id());
+
     if (count($results) == 0) {
       $content['no_results'] = [
         "#type" => "markup",

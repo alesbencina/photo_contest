@@ -7,12 +7,12 @@ use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Routing\Access\AccessInterface;
 
 class PhotoContestAccess implements AccessInterface {
-
   /**
    * Checks access for a specific request.
    *
    * @param \Drupal\Core\Session\AccountInterface $account
-   *   Run access checks for this account.
+   *
+   * @return \Drupal\Core\Access\AccessResult
    */
   public function access(AccountInterface $account) {
     $photoService = \Drupal::service('photo_contest.photo_service');

@@ -2,17 +2,10 @@
 
 namespace Drupal\photo_contest\Plugin\votingapi_widget;
 
-use Drupal\Core\Ajax\AjaxResponse;
-use Drupal\Core\Form\FormState;
-use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\votingapi_widgets\Plugin\VotingApiWidgetBase;
-use Drupal\Core\Form\FormStateInterface;
-use Drupal\votingapi\Entity\Vote;
-use Drupal\webprofiler\DataCollector\FormsDataCollector;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Assigns ownership of a node to a user.
+ * Fivestar with 10 stars widget.
  *
  * @VotingApiWidget(
  *   id = "fivestar_ten",
@@ -34,10 +27,21 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class MyFivestarWidget extends VotingApiWidgetBase {
 
   /**
-   * Vote form.
+   * @param $entity_type
+   * @param $entity_bundle
+   * @param $entity_id
+   * @param $vote_type
+   * @param $field_name
+   * @param $style
+   * @param $show_results
+   * @param bool $read_only
+   * @param bool $show_own_vote
+   *
+   * @return array
    */
   public function buildForm($entity_type, $entity_bundle, $entity_id, $vote_type, $field_name, $style, $show_results, $read_only = FALSE, $show_own_vote = FALSE) {
     $form = $this->getForm($entity_type, $entity_bundle, $entity_id, $vote_type, $field_name, $style, $show_results, $read_only, $show_own_vote);
+
     $build = [
       'rating' => [
         '#theme' => 'container',
@@ -60,7 +64,7 @@ class MyFivestarWidget extends VotingApiWidgetBase {
   }
 
   /**
-   * {@inheritdoc}
+   * @return array
    */
   public function getStyles() {
     return [
@@ -77,7 +81,7 @@ class MyFivestarWidget extends VotingApiWidgetBase {
   }
 
   /**
-   * {@inheritdoc}
+   * @param array $form
    */
   public function getInitialVotingElement(array &$form) {
     $form['value']['#prefix'] = '<div class="votingapi-widgets fivestar">';

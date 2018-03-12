@@ -7,7 +7,7 @@ use Drupal\Core\Menu\StaticMenuLinkOverridesInterface;
 use Drupal\Core\Session\AccountInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class MainMenu extends MenuLinkDefault {
+class PhotosOverview extends MenuLinkDefault {
 
   /**
    * The current user.
@@ -16,9 +16,14 @@ class MainMenu extends MenuLinkDefault {
    */
   protected $currentUser;
 
-
   /**
-   * {@inheritdoc}
+   * MainMenu constructor.
+   *
+   * @param array $configuration
+   * @param $plugin_id
+   * @param $plugin_definition
+   * @param \Drupal\Core\Menu\StaticMenuLinkOverridesInterface $static_override
+   * @param \Drupal\Core\Session\AccountInterface $current_user
    */
   public function __construct(array $configuration, $plugin_id, $plugin_definition, StaticMenuLinkOverridesInterface $static_override, AccountInterface $current_user) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $static_override);
@@ -27,7 +32,12 @@ class MainMenu extends MenuLinkDefault {
   }
 
   /**
-   * {@inheritdoc}
+   * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
+   * @param array $configuration
+   * @param $plugin_id
+   * @param $plugin_definition
+   *
+   * @return static
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
     return new static(
@@ -39,6 +49,11 @@ class MainMenu extends MenuLinkDefault {
     );
   }
 
+  /**
+   * Show or hide menu link if user role is jury or administrator.
+   *
+   * @return bool|int
+   */
   public function isEnabled() {
     $roles = $this->currentUser->getRoles();
     if (in_array('administrator', $roles)) {

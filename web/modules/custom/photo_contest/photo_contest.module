@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains photo_contest.module.
- */
-
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Ajax\AjaxResponse;
@@ -13,7 +8,10 @@ use Drupal\Core\Ajax\RemoveCommand;
 use Drupal\Core\Cache\Cache;
 
 /**
- * Implements hook_help().
+ * @param $route_name
+ * @param \Drupal\Core\Routing\RouteMatchInterface $route_match
+ *
+ * @return string
  */
 function photo_contest_help($route_name, RouteMatchInterface $route_match) {
   switch ($route_name) {
@@ -48,6 +46,10 @@ function photo_contest_theme() {
 
 /**
  * Implements hook_form_FORM_ID_alter().
+ *
+ * @param $form
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ * @param $form_id
  */
 function photo_contest_form_node_photo_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
   $form['#cache']['tags'] = [
@@ -63,10 +65,23 @@ function photo_contest_form_node_photo_form_alter(&$form, \Drupal\Core\Form\Form
   ];
 }
 
+/**
+ * Implements hook_preprocess_page(&$variables).
+ *
+ * @param $variables
+ */
 function photo_contest_preprocess_page(&$variables) {
   $variables['#attached']['library'][] = 'photo_contest/drupal.dialog.ajax';
 }
 
+/**
+ * Callback function for add photo form.
+ *
+ * @param array $form
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *
+ * @return array|\Drupal\Core\Ajax\AjaxResponse
+ */
 function ajaxRebuildCallback(array $form, FormStateInterface $form_state) {
   if (count($form_state->getErrors()) > 0) {
     return $form;
@@ -95,9 +110,8 @@ function photo_contest_entity_view_display_alter(\Drupal\Core\Entity\Display\Ent
   if ($context['bundle'] == 'photo' && $context['view_mode'] == 'teaser' || $context['view_mode'] == 'full') {
     $user_roles = \Drupal::currentUser()->getRoles();
     $target = ['adminstrator', 'jury'];
-
+    // at least one of $target is in $haystack
     if (count(array_intersect($target, $user_roles)) <= 0) {
-      // at least one of $target is in $haystack
       $display->removeComponent('field_vote');
     }
   }

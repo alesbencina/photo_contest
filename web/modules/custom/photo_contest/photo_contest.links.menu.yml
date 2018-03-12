@@ -17,10 +17,5 @@ photo_menu_link_photos_overview:
   title: Photos overview
   description: 'Photos overview  - jury only'
   menu_name: account
-  class: Drupal\photo_contest\Plugin\Menu\MainMenu
+  class: Drupal\photo_contest\Plugin\Menu\PhotosOverview
   route_name: photo_contest.photos_overview
-photo_contest_registration_link:
-  title: Register
-  description: 'Register'
-  menu_name: account
-  route_name: registration_link.register

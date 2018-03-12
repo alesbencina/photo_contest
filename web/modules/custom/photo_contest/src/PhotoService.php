@@ -3,8 +3,8 @@
 namespace Drupal\photo_contest;
 
 use Drupal\Core\Entity\EntityTypeManager;
-use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Entity\Query\QueryFactory;
+use Drupal\Core\Session\AccountInterface;
 
 class PhotoService {
 

@@ -16,9 +16,14 @@ class AccountMenu extends MenuLinkDefault {
    */
   protected $currentUser;
 
-
   /**
-   * {@inheritdoc}
+   * AccountMenu constructor.
+   *
+   * @param array $configuration
+   * @param $plugin_id
+   * @param $plugin_definition
+   * @param \Drupal\Core\Menu\StaticMenuLinkOverridesInterface $static_override
+   * @param \Drupal\Core\Session\AccountInterface $current_user
    */
   public function __construct(array $configuration, $plugin_id, $plugin_definition, StaticMenuLinkOverridesInterface $static_override, AccountInterface $current_user) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $static_override);
@@ -27,7 +32,12 @@ class AccountMenu extends MenuLinkDefault {
   }
 
   /**
-   * {@inheritdoc}
+   * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
+   * @param array $configuration
+   * @param $plugin_id
+   * @param $plugin_definition
+   *
+   * @return static
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
     return new static(
@@ -39,33 +49,29 @@ class AccountMenu extends MenuLinkDefault {
     );
   }
 
+  /**
+   * @return array|string[]
+   */
   public function getCacheTags() {
     return [
       'account_add_photo_link',
     ];
   }
 
+  /**
+   * Show or hide menu link if user posted more than three photos.
+   *
+   * @return bool|int
+   */
   public function isEnabled() {
-    if ($this->checkUserPosts()) {
+    $photoService = \Drupal::service('photo_contest.photo_service');
+
+    if ($photoService->checkUserPosts()) {
       return 0;
     }
     else {
       return 1;
     }
-  }
-
-  private function checkUserPosts() {
-    $posts = \Drupal::entityQuery('node')
-      ->condition('type','photo')
-      ->condition('uid', $this->currentUser->id())
-      ->execute();
-
-    if (count($posts) >= 3) {
-      return TRUE;
-    }
-
-
-    return FALSE;
   }
 
 }
