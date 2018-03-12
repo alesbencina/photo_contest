@@ -8,7 +8,7 @@ dependencies:
     - image.style.thumbnail
   module:
     - image
-    - photo_contest
+    - link
     - user
 _core:
   default_config_hash: K-1rBM8mTIkFp9RqOC2tMRUukOQ1xbRCfSKK8dEddnA
@@ -29,9 +29,11 @@ content:
     third_party_settings: {  }
   field_website:
     weight: 7
-    settings: {  }
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
     third_party_settings: {  }
-    type: entity_user_website_widget
+    type: link_default
     region: content
   language:
     weight: 0

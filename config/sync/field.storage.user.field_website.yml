@@ -1,16 +1,16 @@
-uuid: bd907017-8ecc-4e8b-941d-4d8ce4f0ff16
+uuid: 25b002f3-11a4-4cc4-9fc7-f53099e8b090
 langcode: en
 status: true
 dependencies:
   module:
-    - photo_contest
+    - link
     - user
 id: user.field_website
 field_name: field_website
 entity_type: user
-type: entity_user_website
+type: link
 settings: {  }
-module: photo_contest
+module: link
 locked: false
 cardinality: 1
 translatable: true

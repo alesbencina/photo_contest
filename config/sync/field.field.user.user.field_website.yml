@@ -1,11 +1,11 @@
-uuid: 9cb3d24b-00f6-411c-abce-1ab74d7fce15
+uuid: 98f21726-d3e8-41d1-8452-b45b682f8194
 langcode: en
 status: true
 dependencies:
   config:
     - field.storage.user.field_website
   module:
-    - photo_contest
+    - link
     - user
 id: user.user.field_website
 field_name: field_website
@@ -15,9 +15,9 @@ label: website
 description: ''
 required: false
 translatable: false
-default_value:
-  -
-    url: ''
+default_value: {  }
 default_value_callback: ''
-settings: {  }
-field_type: entity_user_website
+settings:
+  link_type: 16
+  title: 0
+field_type: link

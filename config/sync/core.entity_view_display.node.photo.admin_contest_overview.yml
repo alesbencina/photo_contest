@@ -36,19 +36,19 @@ third_party_settings:
       ds_content:
         - node_title
         - field_photo
-        - photo_author_website
+        - 'dynamic_token_field:node-photo_author'
         - field_description
         - field_vote
         - photo_vote_result
     fields:
-      photo_author_website:
-        plugin_id: photo_author_website
-        weight: 2
-        label: hidden
-        formatter: default
       photo_vote_result:
         plugin_id: photo_vote_result
         weight: 5
+        label: hidden
+        formatter: default
+      'dynamic_token_field:node-photo_author':
+        plugin_id: 'dynamic_token_field:node-photo_author'
+        weight: 2
         label: hidden
         formatter: default
       node_title:

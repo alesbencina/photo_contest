@@ -1,0 +1,11 @@
+id: photo_author
+label: photo_author
+ui_limit: ''
+properties:
+  content:
+    value: "<p>Author of photo:&nbsp;<a href=\"[node:author:field_website:uri]\" target=\"_blank\">[node:author:display-name]</a></p>\r\n"
+    format: full_html
+type: token
+type_label: 'Token field'
+entities:
+  node: node

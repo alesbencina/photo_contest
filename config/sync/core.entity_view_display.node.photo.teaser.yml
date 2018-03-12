@@ -38,12 +38,12 @@ third_party_settings:
         - node_title
         - field_photo
       right:
-        - photo_author_website
+        - 'dynamic_token_field:node-photo_author'
         - field_vote
         - field_description
     fields:
-      photo_author_website:
-        plugin_id: photo_author_website
+      'dynamic_token_field:node-photo_author':
+        plugin_id: 'dynamic_token_field:node-photo_author'
         weight: 2
         label: hidden
         formatter: default

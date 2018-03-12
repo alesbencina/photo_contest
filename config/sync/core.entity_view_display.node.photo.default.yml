@@ -38,14 +38,14 @@ third_party_settings:
         - node_title
         - field_photo
       right:
+        - 'dynamic_token_field:node-photo_author'
         - field_vote
-        - photo_author_website
         - field_description
         - field_location
     fields:
-      photo_author_website:
-        plugin_id: photo_author_website
-        weight: 3
+      'dynamic_token_field:node-photo_author':
+        plugin_id: 'dynamic_token_field:node-photo_author'
+        weight: 2
         label: hidden
         formatter: default
       node_title:
@@ -53,6 +53,10 @@ third_party_settings:
         weight: 0
         label: hidden
         formatter: default
+        settings:
+          wrapper: h2
+          class: ''
+          link: false
 id: node.photo.default
 targetEntityType: node
 bundle: photo
@@ -109,7 +113,7 @@ content:
     third_party_settings: {  }
   field_vote:
     type: voting_api_formatter
-    weight: 2
+    weight: 3
     region: right
     label: above
     settings:
