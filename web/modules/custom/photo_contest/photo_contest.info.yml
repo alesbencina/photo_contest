@@ -1,0 +1,5 @@
+name: 'photo_contest'
+type: module
+description: 'Photo contest'
+core: 8.x
+package: 'Custom'

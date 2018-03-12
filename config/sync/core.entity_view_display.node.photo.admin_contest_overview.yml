@@ -1,0 +1,105 @@
+uuid: c322ec9e-d305-42ba-afe6-7f8711373a30
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.admin_contest_overview
+    - field.field.node.photo.field_description
+    - field.field.node.photo.field_location
+    - field.field.node.photo.field_photo
+    - field.field.node.photo.field_vote
+    - image.style.medium
+    - node.type.photo
+  module:
+    - ds
+    - image
+    - text
+    - user
+    - votingapi_widgets
+third_party_settings:
+  ds:
+    layout:
+      id: ds_1col
+      library: null
+      disable_css: false
+      entity_classes: all_classes
+      settings:
+        wrappers:
+          ds_content: div
+        outer_wrapper: div
+        attributes: ''
+        link_attribute: ''
+        link_custom: ''
+        classes:
+          layout_class: {  }
+    regions:
+      ds_content:
+        - node_title
+        - field_photo
+        - photo_author_website
+        - field_description
+        - field_vote
+        - photo_vote_result
+    fields:
+      photo_author_website:
+        plugin_id: photo_author_website
+        weight: 2
+        label: hidden
+        formatter: default
+      photo_vote_result:
+        plugin_id: photo_vote_result
+        weight: 5
+        label: hidden
+        formatter: default
+      node_title:
+        plugin_id: node_title
+        weight: 0
+        label: hidden
+        formatter: default
+        settings:
+          link: true
+          wrapper: h2
+          class: ''
+id: node.photo.admin_contest_overview
+targetEntityType: node
+bundle: photo
+mode: admin_contest_overview
+content:
+  field_description:
+    weight: 3
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: ds_content
+  field_photo:
+    type: image
+    weight: 1
+    region: ds_content
+    label: hidden
+    settings:
+      image_style: medium
+      image_link: content
+    third_party_settings:
+      ds:
+        ft:
+          id: default
+          settings:
+            lb: ''
+            lb-col: false
+            classes: {  }
+  field_vote:
+    type: voting_api_formatter
+    weight: 4
+    region: ds_content
+    label: above
+    settings:
+      readonly: false
+      style: default
+      show_results: false
+      values: {  }
+      show_own_vote: false
+    third_party_settings: {  }
+hidden:
+  field_location: true
+  links: true

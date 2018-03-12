@@ -1,0 +1,11 @@
+registration_link.register:
+  path: '/user/register'
+  defaults:
+    _entity_form: 'user.register'
+    _title: 'Create new account'
+  requirements:
+     _role: anonymous + administrator
+photo_contest.photos_overview:
+  path: '/photos-overview'
+  requirements:
+    _role: jury

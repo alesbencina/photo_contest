@@ -1,0 +1,19 @@
+uuid: bd907017-8ecc-4e8b-941d-4d8ce4f0ff16
+langcode: en
+status: true
+dependencies:
+  module:
+    - photo_contest
+    - user
+id: user.field_website
+field_name: field_website
+entity_type: user
+type: entity_user_website
+settings: {  }
+module: photo_contest
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

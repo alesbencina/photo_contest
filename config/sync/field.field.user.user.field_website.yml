@@ -1,0 +1,23 @@
+uuid: 9cb3d24b-00f6-411c-abce-1ab74d7fce15
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_website
+  module:
+    - photo_contest
+    - user
+id: user.user.field_website
+field_name: field_website
+entity_type: user
+bundle: user
+label: website
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    url: ''
+default_value_callback: ''
+settings: {  }
+field_type: entity_user_website

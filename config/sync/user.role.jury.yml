@@ -1,0 +1,13 @@
+uuid: 65beb88e-3c9e-44b9-81e0-25c4555b67c0
+langcode: en
+status: true
+dependencies: {  }
+id: jury
+label: Jury
+weight: 3
+is_admin: null
+permissions:
+  - 'clear own vote on node:photo:field_vote'
+  - 'edit own vote on node:photo:field_vote'
+  - 'edit voting status on node:photo:field_vote'
+  - 'vote on node:photo:field_vote'

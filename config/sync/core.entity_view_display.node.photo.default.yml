@@ -1,0 +1,123 @@
+uuid: 644c008e-c4e0-494d-b4d1-3eb6ddd88cbc
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.photo.field_description
+    - field.field.node.photo.field_location
+    - field.field.node.photo.field_photo
+    - field.field.node.photo.field_vote
+    - image.style.large
+    - node.type.photo
+  module:
+    - ds
+    - geolocation
+    - image
+    - text
+    - user
+    - votingapi_widgets
+third_party_settings:
+  ds:
+    layout:
+      id: ds_2col
+      library: ds/ds_2col
+      disable_css: false
+      entity_classes: all_classes
+      settings:
+        wrappers:
+          left: div
+          right: div
+        outer_wrapper: div
+        attributes: ''
+        link_attribute: ''
+        link_custom: ''
+        classes:
+          layout_class: {  }
+    regions:
+      left:
+        - node_title
+        - field_photo
+      right:
+        - field_vote
+        - photo_author_website
+        - field_description
+        - field_location
+    fields:
+      photo_author_website:
+        plugin_id: photo_author_website
+        weight: 3
+        label: hidden
+        formatter: default
+      node_title:
+        plugin_id: node_title
+        weight: 0
+        label: hidden
+        formatter: default
+id: node.photo.default
+targetEntityType: node
+bundle: photo
+mode: default
+content:
+  field_description:
+    weight: 4
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: right
+  field_location:
+    type: geolocation_map
+    weight: 5
+    region: right
+    label: above
+    settings:
+      title: ''
+      set_marker: '1'
+      common_map: ''
+      info_text: ''
+      use_overridden_map_settings: 0
+      google_map_settings:
+        type: ROADMAP
+        zoom: '10'
+        minZoom: 0
+        maxZoom: 18
+        rotateControl: 0
+        mapTypeControl: 1
+        streetViewControl: 1
+        zoomControl: 1
+        fullscreenControl: 0
+        scrollwheel: 1
+        disableDoubleClickZoom: 0
+        draggable: 1
+        height: 400px
+        width: 100%
+        info_auto_display: 1
+        marker_icon_path: ''
+        disableAutoPan: 1
+        style: ''
+        preferScrollingToZooming: 0
+        gestureHandling: auto
+    third_party_settings: {  }
+  field_photo:
+    type: image
+    weight: 1
+    region: left
+    label: hidden
+    settings:
+      image_style: large
+      image_link: content
+    third_party_settings: {  }
+  field_vote:
+    type: voting_api_formatter
+    weight: 2
+    region: right
+    label: above
+    settings:
+      style: default
+      show_own_vote: '1'
+      readonly: 0
+      show_results: 0
+      values: {  }
+    third_party_settings: {  }
+hidden:
+  links: true

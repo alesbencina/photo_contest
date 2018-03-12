@@ -1,0 +1,124 @@
+<?php
+
+/**
+ * @file
+ * Contains photo_contest.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Ajax\AjaxResponse;
+use Drupal\Core\Ajax\CloseModalDialogCommand;
+use Drupal\Core\Ajax\RemoveCommand;
+use Drupal\Core\Cache\Cache;
+
+/**
+ * Implements hook_help().
+ */
+function photo_contest_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the photo_contest module.
+    case 'help.page.photo_contest':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Photo contest') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function photo_contest_theme() {
+  return [
+    'photo_contest' => [
+      'render element' => 'children',
+    ],
+    'photo_contest_entity_vote_statistic' => [
+      'variables' => [
+        'num_of_votes' => NULL,
+        'average' => NULL,
+      ],
+      'template' => 'photo-vote-result',
+    ],
+  ];
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function photo_contest_form_node_photo_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  $form['#cache']['tags'] = [
+    'account_add_photo_link',
+  ];
+  $form['#prefix'] = "<div id=\"{$form_id}-wrapper\">";
+  $form['#suffix'] = '</div>';
+
+  $form['actions']['submit']['#ajax'] = [
+    'wrapper' => $form_id . '-wrapper',
+    'callback' => 'ajaxRebuildCallback',
+    'effect' => 'fade',
+  ];
+}
+
+function photo_contest_preprocess_page(&$variables) {
+  $variables['#attached']['library'][] = 'photo_contest/drupal.dialog.ajax';
+}
+
+function ajaxRebuildCallback(array $form, FormStateInterface $form_state) {
+  if (count($form_state->getErrors()) > 0) {
+    return $form;
+  }
+  $response = new AjaxResponse();
+
+  $photoService = \Drupal::service('photo_contest.photo_service');
+  if ($photoService->checkUserPosts()) {
+    $response->addCommand(new RemoveCommand('#link_add_photo'));
+  }
+  $command = new CloseModalDialogCommand();
+
+  $response->addCommand($command);
+  Cache::invalidateTags(['account_add_photo_link']);
+
+  return $response;
+}
+
+
+function photo_contest_entity_presave(Drupal\Core\Entity\EntityInterface $entity) {
+
+}
+
+//not getting same id in the widget
+function photo_contest_entity_insert(Drupal\Core\Entity\EntityInterface $entity) {
+  if ($entity->bundle() == 'vote') {
+    $id = $entity->id();
+    $user = \Drupal::service('current_user');
+    $voteIds = \Drupal::entityQuery('vote')
+      ->condition('entity_id', $entity->get('entity_id')->target_id)
+      ->condition('user_id', $user->id())
+      ->execute();
+
+    if (count($voteIds) > 0) {
+      unset($voteIds[$id]);
+      entity_delete_multiple('vote', $voteIds);
+    }
+  }
+}
+
+function photo_contest_entity_view_display_alter(\Drupal\Core\Entity\Display\EntityViewDisplayInterface $display, array $context) {
+  if ($context['bundle'] == 'photo' && $context['view_mode'] == 'teaser' || $context['view_mode'] == 'full') {
+    $user_roles = \Drupal::currentUser()->getRoles();
+    $target = ['adminstrator', 'jury'];
+
+    if (count(array_intersect($target, $user_roles)) <= 0) {
+      // at least one of $target is in $haystack
+      $display->removeComponent('field_vote');
+    }
+  }
+
+  if ($context['bundle'] == 'photo' && $context['view_mode'] == 'admin_contest_overview') {
+    $display->removeComponent('field_vote');
+  }
+}

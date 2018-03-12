@@ -1,0 +1,9 @@
+services:
+  photo_contest.photo_service:
+      class: Drupal\photo_contest\PhotoService
+      arguments: ['@entity_type.manager','@current_user','@entity.query']
+  photo_contest.route_subscriber:
+      class: Drupal\photo_contest\Routing\RouteSubscriber
+      arguments: ['@current_user','@current_route_match']
+      tags:
+        - { name: event_subscriber }

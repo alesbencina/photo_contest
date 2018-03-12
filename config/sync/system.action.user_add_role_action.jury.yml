@@ -1,0 +1,14 @@
+uuid: 6ccb47bc-f5d2-4cf8-957f-6ee157f82197
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.jury
+  module:
+    - user
+id: user_add_role_action.jury
+label: 'Add the Jury role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: jury

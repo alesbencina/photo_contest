@@ -1,0 +1,10 @@
+uuid: c7c4b7fb-6781-43ff-8504-c40fdfbf00e7
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.admin_contest_overview
+label: 'Admin contest overview'
+targetEntityType: node
+cache: true

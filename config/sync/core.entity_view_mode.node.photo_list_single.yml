@@ -1,0 +1,10 @@
+uuid: 160bb80d-2d4f-4daa-b5e2-64cf2d78a4e9
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.photo_list_single
+label: 'Photo list single'
+targetEntityType: node
+cache: true

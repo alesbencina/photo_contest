@@ -1,0 +1,124 @@
+uuid: a444f68b-a67d-4d21-a83a-41035d678145
+langcode: en
+status: false
+dependencies:
+  config:
+    - core.entity_view_mode.node.photo_list_single
+    - field.field.node.photo.field_description
+    - field.field.node.photo.field_location
+    - field.field.node.photo.field_photo
+    - field.field.node.photo.field_vote
+    - image.style.large
+    - node.type.photo
+  module:
+    - ds
+    - geolocation
+    - image
+    - text
+    - user
+    - votingapi_widgets
+third_party_settings:
+  ds:
+    layout:
+      id: ds_2col
+      library: ds/ds_2col
+      disable_css: false
+      entity_classes: all_classes
+      settings:
+        wrappers:
+          left: div
+          right: div
+        outer_wrapper: div
+        attributes: ''
+        link_attribute: ''
+        link_custom: ''
+        classes:
+          layout_class: {  }
+    regions:
+      left:
+        - node_title
+        - field_photo
+        - photo_author_website
+      right:
+        - field_vote
+        - field_description
+        - field_location
+    fields:
+      photo_author_website:
+        plugin_id: photo_author_website
+        weight: 2
+        label: hidden
+        formatter: default
+      node_title:
+        plugin_id: node_title
+        weight: 0
+        label: hidden
+        formatter: default
+id: node.photo.photo_list_single
+targetEntityType: node
+bundle: photo
+mode: photo_list_single
+content:
+  field_description:
+    weight: 4
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: right
+  field_location:
+    type: geolocation_map
+    weight: 5
+    region: right
+    label: above
+    settings:
+      title: ''
+      set_marker: '1'
+      common_map: ''
+      info_text: ''
+      use_overridden_map_settings: 0
+      google_map_settings:
+        type: ROADMAP
+        zoom: '10'
+        minZoom: 0
+        maxZoom: 18
+        rotateControl: 0
+        mapTypeControl: 1
+        streetViewControl: 1
+        zoomControl: 1
+        fullscreenControl: 0
+        scrollwheel: 1
+        disableDoubleClickZoom: 0
+        draggable: 1
+        height: 400px
+        width: 100%
+        info_auto_display: 1
+        marker_icon_path: ''
+        disableAutoPan: 1
+        style: ''
+        preferScrollingToZooming: 0
+        gestureHandling: auto
+    third_party_settings: {  }
+  field_photo:
+    type: image
+    weight: 1
+    region: left
+    label: above
+    settings:
+      image_style: large
+      image_link: content
+    third_party_settings: {  }
+  field_vote:
+    type: voting_api_formatter
+    weight: 3
+    region: right
+    label: above
+    settings:
+      readonly: false
+      style: default
+      show_results: false
+      values: {  }
+      show_own_vote: false
+    third_party_settings: {  }
+hidden:
+  links: true

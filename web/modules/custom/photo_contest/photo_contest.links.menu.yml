@@ -1,0 +1,21 @@
+photo_menu_link_add_photo:
+  title: Add image to contest
+  description: 'Add photo'
+  tags:
+    - { name: account_add_photo_link }
+  menu_name: account
+  class: Drupal\photo_contest\Plugin\Menu\AccountMenu
+  route_name: node.add
+  route_parameters: { node_type: 'photo' }
+  options:
+    attributes:
+      class: use-ajax
+      data-dialog-type: modal
+      data-dialog-options: '{"width":700}'
+      id: 'link_add_photo'
+photo_menu_link_photos_overview:
+  title: Photos overview
+  description: 'Photos overview  - jury only'
+  menu_name: account
+  class: Drupal\photo_contest\Plugin\Menu\MainMenu
+  route_name: photo_contest.photos_overview
