@@ -6,7 +6,6 @@ use Drupal\Core\Entity\EntityTypeManager;
 use Drupal\Core\Entity\Query\QueryFactory;
 use Drupal\Core\Session\AccountInterface;
 
-//test
 class PhotoService {
 
   /**
