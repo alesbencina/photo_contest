@@ -6,12 +6,19 @@ use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\CloseModalDialogCommand;
 use Drupal\Core\Ajax\RemoveCommand;
 use Drupal\Core\Cache\Cache;
+use Drupal\Core\Ajax\RedirectCommand;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 
 /**
- * @param $route_name
+ * It returns output string.
+ *
+ * @param string $route_name
+ *   Route name.
  * @param \Drupal\Core\Routing\RouteMatchInterface $route_match
+ *   RouteMatchInterface $route_match.
  *
  * @return string
+ *   Returns output string.
  */
 function photo_contest_help($route_name, RouteMatchInterface $route_match) {
   switch ($route_name) {
@@ -46,12 +53,8 @@ function photo_contest_theme() {
 
 /**
  * Implements hook_form_FORM_ID_alter().
- *
- * @param $form
- * @param \Drupal\Core\Form\FormStateInterface $form_state
- * @param $form_id
  */
-function photo_contest_form_node_photo_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+function photo_contest_form_node_photo_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   $form['#cache']['tags'] = [
     'account_add_photo_link',
   ];
@@ -60,7 +63,7 @@ function photo_contest_form_node_photo_form_alter(&$form, \Drupal\Core\Form\Form
 
   $form['actions']['submit']['#ajax'] = [
     'wrapper' => $form_id . '-wrapper',
-    'callback' => 'ajaxRebuildCallback',
+    'callback' => 'ajax_build_callback',
     'effect' => 'fade',
   ];
 }
@@ -78,11 +81,14 @@ function photo_contest_preprocess_page(&$variables) {
  * Callback function for add photo form.
  *
  * @param array $form
+ *   Nested array of form elements that comprise the form.
  * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   The current state of the form.
  *
  * @return array|\Drupal\Core\Ajax\AjaxResponse
+ *   JSON response object for AJAX requests.
  */
-function ajaxRebuildCallback(array $form, FormStateInterface $form_state) {
+function ajax_build_callback(array $form, FormStateInterface $form_state) {
   if (count($form_state->getErrors()) > 0) {
     return $form;
   }
@@ -93,7 +99,7 @@ function ajaxRebuildCallback(array $form, FormStateInterface $form_state) {
     $response->addCommand(new RemoveCommand('#link_add_photo'));
   }
   $command = new CloseModalDialogCommand();
-  $response->addCommand(new \Drupal\Core\Ajax\RedirectCommand('/photos'));
+  $response->addCommand(new RedirectCommand('/photos'));
 
   $response->addCommand($command);
   Cache::invalidateTags(['account_add_photo_link']);
@@ -101,16 +107,15 @@ function ajaxRebuildCallback(array $form, FormStateInterface $form_state) {
   return $response;
 }
 
-
 /**
- * @param \Drupal\Core\Entity\Display\EntityViewDisplayInterface $display
- * @param array $context
+ * Implements hook_entity_view_display_alter().
  */
-function photo_contest_entity_view_display_alter(\Drupal\Core\Entity\Display\EntityViewDisplayInterface $display, array $context) {
+function photo_contest_entity_view_display_alter(EntityViewDisplayInterface $display, array $context) {
   if ($context['bundle'] == 'photo' && $context['view_mode'] == 'teaser' || $context['view_mode'] == 'full') {
     $user_roles = \Drupal::currentUser()->getRoles();
     $target = ['adminstrator', 'jury'];
-    // at least one of $target is in $haystack
+
+    // Check if user have at least one of specified roles ($target)
     if (count(array_intersect($target, $user_roles)) <= 0) {
       $display->removeComponent('field_vote');
     }

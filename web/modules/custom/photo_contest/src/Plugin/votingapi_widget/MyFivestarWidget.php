@@ -27,17 +27,29 @@ use Drupal\votingapi_widgets\Plugin\VotingApiWidgetBase;
 class MyFivestarWidget extends VotingApiWidgetBase {
 
   /**
-   * @param $entity_type
-   * @param $entity_bundle
-   * @param $entity_id
-   * @param $vote_type
-   * @param $field_name
-   * @param $style
-   * @param $show_results
+   * It returns render array.
+   *
+   * @param string $entity_type
+   *   Entity type (node).
+   * @param string $entity_bundle
+   *   Entity bundle (photo etc.).
+   * @param int $entity_id
+   *   Entity ID - node id.
+   * @param string $vote_type
+   *   Vote type (vote).
+   * @param string $field_name
+   *   Field name (field_vote etc).
+   * @param string $style
+   *   Style (default).
+   * @param int $show_results
+   *   Show or hide results.
    * @param bool $read_only
+   *   Set vote read only.
    * @param bool $show_own_vote
+   *   Show own vote.
    *
    * @return array
+   *   Returns render array with form.
    */
   public function buildForm($entity_type, $entity_bundle, $entity_id, $vote_type, $field_name, $style, $show_results, $read_only = FALSE, $show_own_vote = FALSE) {
     $form = $this->getForm($entity_type, $entity_bundle, $entity_id, $vote_type, $field_name, $style, $show_results, $read_only, $show_own_vote);
@@ -64,7 +76,10 @@ class MyFivestarWidget extends VotingApiWidgetBase {
   }
 
   /**
+   * It returns array of configuration for voting display style.
+   *
    * @return array
+   *   It returns array of configuration for voting display style.
    */
   public function getStyles() {
     return [
@@ -94,4 +109,5 @@ class MyFivestarWidget extends VotingApiWidgetBase {
       'data-is-edit' => 1,
     ];
   }
+
 }

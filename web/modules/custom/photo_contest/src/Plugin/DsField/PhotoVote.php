@@ -21,6 +21,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class PhotoVote extends DsFieldBase implements ContainerFactoryPluginInterface {
 
   /**
+   * QueryFactory $entityQuery.
+   *
    * @var \Drupal\Core\Entity\Query\QueryFactory
    */
   protected $entityQuery;
@@ -29,9 +31,13 @@ class PhotoVote extends DsFieldBase implements ContainerFactoryPluginInterface {
    * PhotoVote constructor.
    *
    * @param array $configuration
-   * @param $plugin_id
-   * @param $plugin_definition
+   *   A configuration array containing information about the plugin instance.
+   * @param string $plugin_id
+   *   The plugin ID for the plugin instance.
+   * @param mixed $plugin_definition
+   *   The plugin implementation definition.
    * @param \Drupal\Core\Entity\Query\QueryFactory $queryFactory
+   *   Queryfactory $queryFactory.
    */
   public function __construct(array $configuration, $plugin_id, $plugin_definition, QueryFactory $queryFactory) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
@@ -39,12 +45,19 @@ class PhotoVote extends DsFieldBase implements ContainerFactoryPluginInterface {
   }
 
   /**
+   * Creates an instance of the plugin.
+   *
    * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
+   *   The container to pull out services used in the plugin.
    * @param array $configuration
+   *   A configuration array containing information about the plugin instance.
    * @param string $plugin_id
+   *   The plugin ID for the plugin instance.
    * @param mixed $plugin_definition
+   *   The plugin implementation definition.
    *
    * @return static
+   *   Returns an instance of this plugin.
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
     return new static(
@@ -56,9 +69,10 @@ class PhotoVote extends DsFieldBase implements ContainerFactoryPluginInterface {
   }
 
   /**
-   * Function builds render array to display average vote for photo and vote count.
+   * Function builds render array for displaying average vote and vote count.
    *
    * @return array|mixed
+   *   Returns render array.
    */
   public function build() {
     $entity = $this->entity();

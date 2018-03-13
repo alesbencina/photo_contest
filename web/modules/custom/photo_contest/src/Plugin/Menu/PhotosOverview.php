@@ -7,6 +7,11 @@ use Drupal\Core\Menu\StaticMenuLinkOverridesInterface;
 use Drupal\Core\Session\AccountInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
+/**
+ * Show menu item if user role is jury.
+ *
+ * @package Drupal\photo_contest\Plugin\Menu
+ */
 class PhotosOverview extends MenuLinkDefault {
 
   /**
@@ -17,13 +22,19 @@ class PhotosOverview extends MenuLinkDefault {
   protected $currentUser;
 
   /**
-   * MainMenu constructor.
+   * PhotosOverview constructor.
    *
    * @param array $configuration
-   * @param $plugin_id
-   * @param $plugin_definition
+   *   A configuration array containing information about the plugin instance.
+   * @param string $plugin_id
+   *   The plugin ID for the plugin instance.
+   * @param mixed $plugin_definition
+   *   The plugin implementation definition.
    * @param \Drupal\Core\Menu\StaticMenuLinkOverridesInterface $static_override
+   *   Defines an interface for objects which overrides menu links
+   *   defined in YAML.
    * @param \Drupal\Core\Session\AccountInterface $current_user
+   *   User account interface.
    */
   public function __construct(array $configuration, $plugin_id, $plugin_definition, StaticMenuLinkOverridesInterface $static_override, AccountInterface $current_user) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $static_override);
@@ -32,10 +43,16 @@ class PhotosOverview extends MenuLinkDefault {
   }
 
   /**
+   * Creates an instance of the plugin.
+   *
    * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
+   *   The container to pull out services used in the plugin.
    * @param array $configuration
-   * @param $plugin_id
-   * @param $plugin_definition
+   *   A configuration array containing information about the plugin instance.
+   * @param string $plugin_id
+   *   The plugin ID for the plugin instance.
+   * @param mixed $plugin_definition
+   *   The plugin implementation definition.
    *
    * @return static
    */
@@ -53,6 +70,7 @@ class PhotosOverview extends MenuLinkDefault {
    * Show or hide menu link if user role is jury or administrator.
    *
    * @return bool|int
+   *   Returns 0 or 1 (disable or enable).
    */
   public function isEnabled() {
     $roles = $this->currentUser->getRoles();
@@ -63,4 +81,5 @@ class PhotosOverview extends MenuLinkDefault {
       return 1;
     }
   }
+
 }

@@ -6,6 +6,11 @@ use Drupal\Core\Entity\EntityTypeManager;
 use Drupal\Core\Entity\Query\QueryFactory;
 use Drupal\Core\Session\AccountInterface;
 
+/**
+ * It provides service which define different functions for working with Photo.
+ *
+ * @package Drupal\photo_contest
+ */
 class PhotoService {
 
   /**
@@ -23,15 +28,21 @@ class PhotoService {
   protected $currentUser;
 
   /**
+   * QueryFactory $queryFactory.
+   *
    * @var \Drupal\Core\Entity\Query\QueryFactory
    */
   protected $queryFactory;
 
   /**
-   * ReviewsService constructor.
+   * PhotoService constructor.
    *
    * @param \Drupal\Core\Entity\EntityTypeManager $entityTypeManager
+   *   EntityTypeManager $entityTypeManager.
    * @param \Drupal\Core\Session\AccountInterface $account
+   *   AccountInterface $account.
+   * @param \Drupal\Core\Entity\Query\QueryFactory $query
+   *   QueryFactory $query.
    */
   public function __construct(
     EntityTypeManager $entityTypeManager,
@@ -43,6 +54,12 @@ class PhotoService {
     $this->queryFactory = $query;
   }
 
+  /**
+   * It checks if user exceeded number of photos.
+   *
+   * @return bool
+   *   Returns true or false.
+   */
   public function checkUserPosts() {
     $posts = $this->queryFactory->get('node')
       ->condition('type', 'photo')
