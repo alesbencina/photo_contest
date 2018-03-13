@@ -19,3 +19,8 @@ photo_menu_link_photos_overview:
   menu_name: account
   class: Drupal\photo_contest\Plugin\Menu\PhotosOverview
   route_name: photo_contest.photos_overview
+photo_menu_link_register:
+  title: Register
+  description: 'Register'
+  menu_name: account
+  route_name: photo_contest.registration_link.register
